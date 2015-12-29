@@ -6,7 +6,7 @@ namespace EWD\Stock\Controller\Adminhtml;
  *
  * @author      Antonio Mendes <antoniom@internationalvapor.com>
  */
-class Warehouse extends \Magento\Backend\App\Action
+abstract class Warehouse extends \Magento\Backend\App\Action
 {
     /**
      * Core registry

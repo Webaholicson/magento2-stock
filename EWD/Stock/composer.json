@@ -20,5 +20,13 @@
                 "EWD/Stock"
             ]
         ]
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "EWD\\Stock\\": ""
+        }
     }
 }

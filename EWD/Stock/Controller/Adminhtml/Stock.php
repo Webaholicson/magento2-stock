@@ -8,7 +8,7 @@ use \Magento\Backend\App\Action;
  *
  * @author      Antonio Mendes <antoniom@internationalvapor.com>
  */
-class Stock extends \Magento\Backend\App\Action
+abstract class Stock extends \Magento\Backend\App\Action
 {
     /**
      * Core registry
