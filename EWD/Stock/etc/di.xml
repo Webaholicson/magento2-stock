@@ -1,3 +1,32 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="ewdstock_warehouse_listing_data_source" xsi:type="string">EWD\Stock\Model\ResourceModel\Warehouse\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="EWD\Stock\Model\ResourceModel\Warehouse\Grid\Collection">
+        <arguments>
+            <argument name="entityFactory" xsi:type="object">Magento\Framework\Data\Collection\EntityFactory</argument>
+            <argument name="logger" xsi:type="object">EWD\Stock\Log\Logger</argument>
+            <argument name="fetchStrategy" xsi:type="object">Magento\Framework\Data\Collection\Db\FetchStrategy\Query</argument>
+            <argument name="eventManager" xsi:type="object">Magento\Framework\Event\Manager</argument>
+        </arguments>
+    </type>
+    <virtualType name="WarehouseGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType> 
+    <virtualType name="WarehouseGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">EWD\Stock\Model\ResourceModel\Warehouse\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">WarehouseGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
 </config>

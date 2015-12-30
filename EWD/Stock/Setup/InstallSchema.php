@@ -62,25 +62,25 @@ class InstallSchema implements InstallSchemaInterface
             'Warehouse Location'
         )->addColumn(
             'warehouse_lat',
-            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             null,
             ['nullable' => true],
             'Warehouse Latitude'
         )->addColumn(
-            'warehouse_longitude',
-            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+            'warehouse_lng',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             null,
             ['nullable' => true],
             'Warehouse Longitude'
         )->addColumn(
-            'created_at',
-            \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+            'creation_time',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
             null,
             [],
             'Created date'
         )->addColumn(
-            'updated_at',
-            \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+            'update_time',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
             null,
             [],
             'Last updated date'

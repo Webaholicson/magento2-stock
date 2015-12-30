@@ -6,7 +6,7 @@ namespace EWD\Stock\Controller\Adminhtml;
  *
  * @author      Antonio Mendes <antoniom@internationalvapor.com>
  */
-abstract class Warehouse extends \Magento\Backend\App\Action
+abstract class Warehouse extends \EWD\Stock\Controller\Adminhtml\Stock
 {
     /**
      * Core registry
@@ -21,10 +21,9 @@ abstract class Warehouse extends \Magento\Backend\App\Action
      */
     public function __construct(\Magento\Backend\App\Action\Context $context, \Magento\Framework\Registry $coreRegistry)
     {
-        $this->_coreRegistry = $coreRegistry;
-        parent::__construct($context);
+        parent::__construct($context, $coreRegistry);
     }
-
+    
     /**
      * Check the permission to run it
      *
@@ -32,7 +31,6 @@ abstract class Warehouse extends \Magento\Backend\App\Action
      */
     protected function _isAllowed()
     {
-        // return $this->_authorization->isAllowed('Magento_Cms::block');
-        return true;
+    	return $this->_authorization->isAllowed('EWD_Stock::warehouse');
     }
 }

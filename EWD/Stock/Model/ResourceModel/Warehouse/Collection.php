@@ -16,7 +16,12 @@ namespace EWD\Stock\Model\ResourceModel\Warehouse;
  * @SuppressWarnings(PHPMD.NumberOfChildren)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class Collection extends \Magento\Catalog\Model\ResourceModel\Collection\AbstractCollection
+class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
-	
+    protected function _construct()
+    {
+        $this->_init('EWD\Stock\Model\Warehouse', 'EWD\Stock\Model\ResourceModel\Warehouse');
+        $this->_map['fields']['warehouse_id'] = 'main_table.warehouse_id';
+        //$this->_map['fields']['store'] = 'store_table.store_id';
+    }
 }
