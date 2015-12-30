@@ -5,7 +5,7 @@
             <resource id="Magento_Backend::admin">
             	<resource id="EWD_Stock::admin" title="Manage Stock" sortOrder="50">
                     <resource id="EWD_Stock::warehouse" title="Warehouses" sortOrder="10">
-                        <resource id="EWD_Stock::manage" title="All Warehouses" sortOrder="10" />
+                        <resource id="EWD_Stock::save_warehouse" title="Create/Edit" sortOrder="10" />
                     </resource>
                 </resource>
             </resource>

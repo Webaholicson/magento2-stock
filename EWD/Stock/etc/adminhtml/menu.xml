@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="EWD_Stock::admin" title="EWD Stock" module="EWD_Stock" sortOrder="60" parent="Magento_Backend::other_settings" action="ewd_stock/stock" resource="EWD_Stock::admin"/>
+        <add id="EWD_Stock::admin" title="EWD Stock" module="EWD_Stock" sortOrder="60" parent="Magento_Catalog::catalog" resource="EWD_Stock::admin"/>
+        <add id="EWD_Stock::warehouse" title="Warehouse" module="EWD_Stock" sortOrder="70" parent="EWD_Stock::admin" action="ewdstock/warehouse" resource="EWD_Stock::warehouse"/>
     </menu>
 </config>

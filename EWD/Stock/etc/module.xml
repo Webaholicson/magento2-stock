@@ -5,5 +5,5 @@
             <module name="Magento_Catalog"/>
             <module name="Magento_CatalogInventory"/>
         </sequence>
-	</module>
+    </module>
 </config>
