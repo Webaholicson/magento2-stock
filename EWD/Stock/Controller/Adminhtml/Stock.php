@@ -10,7 +10,7 @@ use Magento\Backend\App\Action\Context;
  *
  * @author      Antonio Mendes <antoniom@internationalvapor.com>
  */
-abstract class Stock extends \Magento\Backend\App\Action
+abstract class Stock extends Action
 {
     /**
      * Core registry

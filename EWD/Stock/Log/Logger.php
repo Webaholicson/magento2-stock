@@ -1,8 +1,15 @@
 <?php
 namespace EWD\Stock\Log;
-use Psr\Log\AbstractLogger;
-use Zend\Log\Logger as Zend_Logger;
 
+use \Psr\Log\AbstractLogger;
+use \Zend\Log\Logger as Zend_Logger;
+
+/**
+ * Logger for the Stock module
+ *
+ * @author     Antonio Mendes <antonio@epicwindesigns.com>
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class Logger extends AbstractLogger
 {
     protected $_logger;

@@ -1,9 +1,9 @@
 <?php
 namespace EWD\Stock\Controller\Adminhtml;
 
-use EWD\Stock\Controller\Adminhtml\Stock;
-use Magento\Backend\App\Action\Context;
-use Magento\Framework\Registry;
+use \EWD\Stock\Controller\Adminhtml\Stock;
+use \Magento\Backend\App\Action\Context;
+use \Magento\Framework\Registry;
 
 /**
  * Warehouse manage blocks controller

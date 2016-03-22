@@ -1,10 +1,10 @@
 <?php
 namespace EWD\Stock\Model\ResourceModel\Warehouse\Grid;
 
-use Magento\Framework\Api\SearchCriteriaInterface;
-use Magento\Framework\Search\AggregationInterface;
-use Magento\Framework\Api\Search\SearchResultInterface;
-use EWD\Stock\Model\ResourceModel\Warehouse\Collection as WarehouseCollection;
+use \Magento\Framework\Api\SearchCriteriaInterface;
+use \Magento\Framework\Search\AggregationInterface;
+use \Magento\Framework\Api\Search\SearchResultInterface;
+use \EWD\Stock\Model\ResourceModel\Warehouse\Collection as WarehouseCollection;
 
 /**
  * Collection for displaying grid of cms blocks
