@@ -1,12 +1,7 @@
 <?php
-/**
- * Copyright © 2015 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
-
-// @codingStandardsIgnoreFile
-
 namespace EWD\Stock\Model\ResourceModel\Warehouse;
+
+use \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 /**
  * Warehouse collection
@@ -16,7 +11,7 @@ namespace EWD\Stock\Model\ResourceModel\Warehouse;
  * @SuppressWarnings(PHPMD.NumberOfChildren)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
+class Collection extends AbstractCollection
 {
     protected function _construct()
     {

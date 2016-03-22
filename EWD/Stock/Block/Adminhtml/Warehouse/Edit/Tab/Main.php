@@ -63,6 +63,18 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
         }
 
         $fieldset->addField(
+            'is_active',
+            'select',
+            [
+                'label' => __('Status'),
+                'title' => __('Warehouse Status'),
+                'name' => 'is_active',
+                'required' => true,
+                'options' => array(0 => __('Disabled'), 1 => __('Enabled'))
+            ]
+        );
+        
+        $fieldset->addField(
             'warehouse_code',
             'text',
             [
@@ -75,14 +87,13 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
         );
 
         $fieldset->addField(
-            'identifier',
+            'warehouse_name',
             'text',
             [
-                'name' => 'identifier',
-                'label' => __('URL Key'),
-                'title' => __('URL Key'),
+                'name' => 'warehouse_name',
+                'label' => __('Warehouse Name'),
+                'title' => __('Warehouse Name'),
                 'class' => 'validate-identifier',
-                'note' => __('Relative to Web Site Base URL'),
                 'disabled' => $isElementDisabled
             ]
         );
@@ -112,23 +123,62 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
             );
             $model->setStoreId($this->_storeManager->getStore(true)->getId());
         } */
-
+        
         $fieldset->addField(
-            'is_active',
-            'select',
+            'contact_email',
+            'text',
             [
-                'label' => __('Status'),
-                'title' => __('Page Status'),
-                'name' => 'is_active',
-                'required' => true,
-                'options' => $model->getAvailableStatuses(),
+                'label' => __('Contact Email'),
+                'title' => __('Contact Email'),
+                'name' => 'contact_email',
+            ]
+        );
+        
+        $fieldset->addField(
+            'contact_name',
+            'text',
+            [
+                'label' => __('Contact Name'),
+                'title' => __('Contact Name'),
+                'name' => 'contact_name',
+            ]
+        );
+        
+        $fieldset->addField(
+            'warehouse_lat',
+            'text',
+            [
+                'name' => 'warehouse_lat',
+                'label' => __('Latitude'),
+                'title' => __('Warehouse Latitude'),
+                'class' => 'validate-identifier',
                 'disabled' => $isElementDisabled
             ]
         );
         
-        if (!$model->getId()) {
-            $model->setData('is_active', $isElementDisabled ? '0' : '1');
-        }
+        $fieldset->addField(
+            'warehouse_lng',
+            'text',
+            [
+                'name' => 'warehouse_lng',
+                'label' => __('Longitude'),
+                'title' => __('Warehouse Longiture'),
+                'class' => 'validate-identifier',
+                'disabled' => $isElementDisabled
+            ]
+        );
+        
+        $fieldset->addField(
+            'warehouse_address',
+            'textarea',
+            [
+                'name' => 'warehouse_address',
+                'label' => __('Address'),
+                'title' => __('Warehouse Address'),
+                'class' => 'validate-identifier',
+                'disabled' => $isElementDisabled
+            ]
+        );
 
         $this->_eventManager->dispatch('adminhtml_ewdstock_warehouse_edit_tab_main_prepare_form', ['form' => $form]);
 

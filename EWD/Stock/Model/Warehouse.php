@@ -1,7 +1,9 @@
 <?php
 namespace EWD\Stock\Model;
 
-class Warehouse extends \Magento\Framework\Model\AbstractModel
+use \Magento\Framework\Model\AbstractModel;
+
+class Warehouse extends AbstractModel
 {
 	/**
      * Prefix of model events names

@@ -1,7 +1,9 @@
 <?php
 namespace EWD\Stock\Controller\Adminhtml;
 
-use \Magento\Backend\App\Action;
+use Magento\Backend\App\Action;
+use Magento\Framework\Registry;
+use Magento\Backend\App\Action\Context;
 
 /**
  * Warehouse manage blocks controller
@@ -18,10 +20,10 @@ abstract class Stock extends \Magento\Backend\App\Action
     protected $_coreRegistry = null;
 
     /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Registry $coreRegistry
+     * @param Context $context
+     * @param Registry $coreRegistry
      */
-    public function __construct(\Magento\Backend\App\Action\Context $context, \Magento\Framework\Registry $coreRegistry)
+    public function __construct( Context $context,  Registry $coreRegistry)
     {
         $this->_coreRegistry = $coreRegistry;
         parent::__construct($context);
@@ -34,6 +36,6 @@ abstract class Stock extends \Magento\Backend\App\Action
      */
     protected function _isAllowed()
     {
-    	return $this->_authorization->isAllowed('EWD_Stock::stock');
+        return $this->_authorization->isAllowed('EWD_Stock::stock');
     }
 }

@@ -1,12 +1,9 @@
 <?php
-/**
- * Copyright © 2015 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace EWD\Stock\Model\ResourceModel\Warehouse\Grid;
 
-use Magento\Framework\Api\Search\SearchResultInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Search\AggregationInterface;
+use Magento\Framework\Api\Search\SearchResultInterface;
 use EWD\Stock\Model\ResourceModel\Warehouse\Collection as WarehouseCollection;
 
 /**
@@ -67,7 +64,7 @@ class Collection extends WarehouseCollection implements SearchResultInterface
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setSearchCriteria(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria = null)
+    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null)
     {
         return $this;
     }

@@ -1,7 +1,12 @@
 <?php
 namespace EWD\Stock\Controller\Adminhtml\Warehouse;
 
-class Index extends \EWD\Stock\Controller\Adminhtml\Warehouse
+use EWD\Stock\Controller\Adminhtml\Warehouse;
+use Magento\Framework\View\Result\PageFactory;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Registry;
+
+class Index extends Warehouse
 {
     /**
      * @var \Magento\Framework\View\Result\PageFactory
@@ -9,15 +14,12 @@ class Index extends \EWD\Stock\Controller\Adminhtml\Warehouse
     protected $resultPageFactory;
 
     /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Registry $coreRegistry,
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param Context $context
+     * @param Registry $coreRegistry,
+     * @param PageFactory $resultPageFactory
      */
-    public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Registry $coreRegistry,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
-    ) {
+    public function __construct(Context $context, Registry $coreRegistry, PageFactory $resultPageFactory)
+    {
         parent::__construct($context, $coreRegistry);
         $this->resultPageFactory = $resultPageFactory;
     }
@@ -32,7 +34,7 @@ class Index extends \EWD\Stock\Controller\Adminhtml\Warehouse
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('EWD_Stock::admin');
-        $resultPage->getConfig()->getTitle()->set((__('Stock Management')));
+        $resultPage->getConfig()->getTitle()->set(__('Stock Management'));
         return $resultPage;
     }
     

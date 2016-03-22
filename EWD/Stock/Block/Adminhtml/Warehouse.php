@@ -1,14 +1,10 @@
 <?php
-/**
- * Copyright © 2015 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace EWD\Stock\Block\Adminhtml;
 
 /**
  * Adminhtml cms blocks content block
  */
-class Warehosue extends \Magento\Backend\Block\Widget\Grid\Container
+class Warehouse extends \Magento\Backend\Block\Widget\Grid\Container
 {
     /**
      * @return void
