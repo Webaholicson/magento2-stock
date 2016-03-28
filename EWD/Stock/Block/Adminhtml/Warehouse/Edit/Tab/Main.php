@@ -1,12 +1,15 @@
 <?php
 namespace EWD\Stock\Block\Adminhtml\Warehouse\Edit\Tab;
 
+use \Magento\Backend\Block\Widget\Form\Generic;
+use \Magento\Backend\Block\Widget\Tab\TabInterface;
+
 /**
  * Cms page edit form main tab
  * 
  * @author     Antonio Mendes <webaholicson@gmail.com>
  */
-class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magento\Backend\Block\Widget\Tab\TabInterface
+class Main extends Generic implements TabInterface
 {
     /**
      * @var \Magento\Store\Model\System\Store
@@ -41,7 +44,7 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
     {
         /* @var $model \Magento\Cms\Model\Page */
         $model = $this->_coreRegistry->registry('warehouse');
-
+        
         /*
          * Checking if user have permissions to save information
          */
@@ -78,7 +81,7 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
             'warehouse_code',
             'text',
             [
-                'name' => 'warehosue_code',
+                'name' => 'warehouse_code',
                 'label' => __('Warehouse Code'),
                 'title' => __('Warehuse Code'),
                 'required' => true,
@@ -93,7 +96,6 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
                 'name' => 'warehouse_name',
                 'label' => __('Warehouse Name'),
                 'title' => __('Warehouse Name'),
-                'class' => 'validate-identifier',
                 'disabled' => $isElementDisabled
             ]
         );
@@ -130,7 +132,9 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
             [
                 'label' => __('Contact Email'),
                 'title' => __('Contact Email'),
-                'name' => 'contact_email',
+                'name' => 'warehouse_contact_email',
+                'class' => 'validate-email',
+                'required' => true
             ]
         );
         
@@ -140,7 +144,8 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
             [
                 'label' => __('Contact Name'),
                 'title' => __('Contact Name'),
-                'name' => 'contact_name',
+                'name' => 'warehouse_contact_name',
+                'required' => true
             ]
         );
         
@@ -151,7 +156,6 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
                 'name' => 'warehouse_lat',
                 'label' => __('Latitude'),
                 'title' => __('Warehouse Latitude'),
-                'class' => 'validate-identifier',
                 'disabled' => $isElementDisabled
             ]
         );
@@ -163,26 +167,30 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
                 'name' => 'warehouse_lng',
                 'label' => __('Longitude'),
                 'title' => __('Warehouse Longiture'),
-                'class' => 'validate-identifier',
                 'disabled' => $isElementDisabled
             ]
         );
         
         $fieldset->addField(
-            'warehouse_address',
+            'warehouse_location',
             'textarea',
             [
-                'name' => 'warehouse_address',
+                'name' => 'warehouse_location',
                 'label' => __('Address'),
                 'title' => __('Warehouse Address'),
-                'class' => 'validate-identifier',
+                'required' => true,
                 'disabled' => $isElementDisabled
             ]
         );
-
-        $this->_eventManager->dispatch('adminhtml_ewdstock_warehouse_edit_tab_main_prepare_form', ['form' => $form]);
-
-        $form->setValues($model->getData());
+        
+        $this->_eventManager->dispatch('adminhtml_ewdstock_warehouse_edit_tab_main_prepare_form', 
+            ['form' => $form]);
+        
+        if ($this->_backendSession->getWarehouseData()) {
+            $form->setValues($this->_backendSession->getWarehouseData());
+        } else {
+            $form->setValues($model->getData());
+        }
         $this->setForm($form);
 
         return parent::_prepareForm();

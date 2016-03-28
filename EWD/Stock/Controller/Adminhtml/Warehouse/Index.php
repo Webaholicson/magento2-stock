@@ -1,12 +1,12 @@
 <?php
 namespace EWD\Stock\Controller\Adminhtml\Warehouse;
 
-use EWD\Stock\Controller\Adminhtml\Warehouse;
-use Magento\Framework\View\Result\PageFactory;
-use Magento\Backend\App\Action\Context;
-use Magento\Framework\Registry;
-
-class Index extends Warehouse
+/**
+ * Warehouse index action
+ *
+ * @author      Antonio Mendes <webaholicson@gmail.com>
+ */
+class Index extends \EWD\Stock\Controller\Adminhtml\Warehouse
 {
     /**
      * @var \Magento\Framework\View\Result\PageFactory
@@ -14,13 +14,14 @@ class Index extends Warehouse
     protected $resultPageFactory;
 
     /**
-     * @param Context $context
-     * @param Registry $coreRegistry,
-     * @param PageFactory $resultPageFactory
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
-    public function __construct(Context $context, Registry $coreRegistry, PageFactory $resultPageFactory)
-    {
-        parent::__construct($context, $coreRegistry);
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Backend\Model\View\Result\PageFactory $resultPageFactory
+    ) {
+        parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
     }
 
@@ -31,20 +32,10 @@ class Index extends Warehouse
      */
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->setActiveMenu('EWD_Stock::admin');
+        #$resultPage->setActiveMenu('EWD_Stock::admin');
         $resultPage->getConfig()->getTitle()->set(__('Stock Management'));
+        
         return $resultPage;
-    }
-    
-    /**
-     * Check the permission to run it
-     *
-     * @return bool
-     */
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('EWD_Stock::warehouse');
     }
 }

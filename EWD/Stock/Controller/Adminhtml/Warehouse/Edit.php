@@ -1,9 +1,12 @@
 <?php
 namespace EWD\Stock\Controller\Adminhtml\Warehouse;
 
-use Magento\Backend\App\Action;
-
-class Edit extends \Magento\Backend\App\Action
+/**
+ * Warehouse edit action
+ *
+ * @author      Antonio Mendes <webaholicson@gmail.com>
+ */
+class Edit extends \EWD\Stock\Controller\Adminhtml\Warehouse
 {
     /**
      * Core registry
@@ -18,17 +21,17 @@ class Edit extends \Magento\Backend\App\Action
     protected $resultPageFactory;
 
     /**
-     * @param Action\Context $context
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     * @param \Magento\Framework\Registry $registry
      */
     public function __construct(
-        Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Magento\Framework\Registry $registry
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\Registry $coreRegistry,
+        \Magento\Backend\Model\View\Result\PageFactory $resultPageFactory
     ) {
         $this->resultPageFactory = $resultPageFactory;
-        $this->_coreRegistry = $registry;
+        $this->_coreRegistry =$coreRegistry;
         parent::__construct($context);
     }
 
@@ -37,7 +40,7 @@ class Edit extends \Magento\Backend\App\Action
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('Magento_Cms::warehouse_save');
+        return $this->_authorization->isAllowed('EWD_Stock::warehouse_save');
     }
 
     /**
@@ -75,7 +78,6 @@ class Edit extends \Magento\Backend\App\Action
                 $this->messageManager->addError(__('This warehouse no longer exists.'));
                 /** \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
                 $resultRedirect = $this->resultRedirectFactory->create();
-
                 return $resultRedirect->setPath('*/*/');
             }
         }

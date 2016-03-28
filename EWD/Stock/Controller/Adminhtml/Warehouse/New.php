@@ -1,7 +1,12 @@
 <?php
 namespace EWD\Stock\Controller\Adminhtml\Warehouse;
 
-class NewAction extends \Magento\Backend\App\Action
+/**
+ * Warehouse new action
+ *
+ * @author      Antonio Mendes <webaholicson@gmail.com>
+ */
+class NewAction extends \EWD\Stock\Controller\Adminhtml\Warehouse
 {
     /**
      * @var \Magento\Backend\Model\View\Result\Forward
@@ -37,6 +42,6 @@ class NewAction extends \Magento\Backend\App\Action
     {
         /** @var \Magento\Backend\Model\View\Result\Forward $resultForward */
         $resultForward = $this->resultForwardFactory->create();
-        return $resultForward->forward('edit');
+        return $resultForward->forward('*/*/edit');
     }
 }

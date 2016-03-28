@@ -17,6 +17,5 @@ class Collection extends AbstractCollection
     {
         $this->_init('EWD\Stock\Model\Warehouse', 'EWD\Stock\Model\ResourceModel\Warehouse');
         $this->_map['fields']['warehouse_id'] = 'main_table.warehouse_id';
-        //$this->_map['fields']['store'] = 'store_table.store_id';
     }
 }
