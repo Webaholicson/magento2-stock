@@ -19,4 +19,12 @@ class Warehouse extends \Magento\Backend\Block\Widget\Grid\Container
         $this->_addButtonLabel = __('Add New Warehouse');
         parent::_construct();
     }
+    
+    /**
+     * @return string
+     */
+    public function getCreateUrl()
+    {
+        return $this->getUrl('*/*/edit');
+    }
 }

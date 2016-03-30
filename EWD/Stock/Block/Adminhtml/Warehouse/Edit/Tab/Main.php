@@ -83,7 +83,7 @@ class Main extends Generic implements TabInterface
             [
                 'name' => 'warehouse_code',
                 'label' => __('Warehouse Code'),
-                'title' => __('Warehuse Code'),
+                'title' => __('Warehouse Code'),
                 'required' => true,
                 'disabled' => $isElementDisabled
             ]
@@ -127,7 +127,7 @@ class Main extends Generic implements TabInterface
         } */
         
         $fieldset->addField(
-            'contact_email',
+            'warehouse_contact_email',
             'text',
             [
                 'label' => __('Contact Email'),
@@ -139,7 +139,7 @@ class Main extends Generic implements TabInterface
         );
         
         $fieldset->addField(
-            'contact_name',
+            'warehouse_contact_name',
             'text',
             [
                 'label' => __('Contact Name'),

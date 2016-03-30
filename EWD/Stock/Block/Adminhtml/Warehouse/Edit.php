@@ -7,6 +7,7 @@ namespace EWD\Stock\Block\Adminhtml\Warehouse;
  * Warehouse edit page
  *
  * @author     Antonio Mendes <webaholicson@gmail.com>
+ * 
  */
 class Edit extends Container
 {
@@ -21,6 +22,7 @@ class Edit extends Container
      * @param \Magento\Backend\Block\Widget\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param array $data
+     * @codeCoverageIgnore
      */
     public function __construct(
         \Magento\Backend\Block\Widget\Context $context,
@@ -35,7 +37,7 @@ class Edit extends Container
      * Initialize warehouse edit block
      *
      * @return void
-     * @
+     * 
      */
     protected function _construct()
     {
@@ -92,6 +94,7 @@ class Edit extends Container
      *
      * @param string $resourceId
      * @return bool
+     * 
      */
     protected function _isAllowedAction($resourceId)
     {
@@ -103,30 +106,11 @@ class Edit extends Container
      * tab_id will be replaced by desired by JS later
      *
      * @return string
+     * @codeCoverageIgnore
+     * 
      */
     protected function _getSaveAndContinueUrl()
     {
         return $this->getUrl('*/*/save', ['_current' => true, 'back' => 'edit', 'active_tab' => '{{tab_id}}']);
-    }
-    
-    protected function _buildFormClassName()
-    {
-        return str_replace("_", "\\", $this->_blockGroup) . '\\' . $this->nameBuilder->buildClassName(
-            ['Block', $this->_controller, $this->_mode, 'Form']
-        );
-    }
-    
-    protected function _prepareLayout()
-    {
-        if ($this->_blockGroup && $this->_controller && $this->_mode && !$this->_layout->getChildName(
-            $this->_nameInLayout,
-            'form'
-        )
-        ) {
-            $this->addChild('form', $this->_buildFormClassName());
-        }
-        
-        $this->toolbar->pushButtons($this, $this->buttonList);
-        return $this;
     }
 }

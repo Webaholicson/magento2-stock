@@ -12,6 +12,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
      * @param \Magento\Backend\Block\Template\Context $context
      * @param \Magento\Backend\Helper\Data $backendHelper
      * @param array $data
+     * @codeCoverageIgnore
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
