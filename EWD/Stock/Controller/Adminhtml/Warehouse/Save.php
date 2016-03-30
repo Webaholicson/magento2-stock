@@ -9,23 +9,6 @@ namespace EWD\Stock\Controller\Adminhtml\Warehouse;
 class Save extends \EWD\Stock\Controller\Adminhtml\Warehouse
 {
     /**
-     * @var \Magento\Backend\Model\View\Result\Forward
-     */
-    protected $resultForwardFactory;
-
-    /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
-     */
-    public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
-    ) {
-        $this->resultForwardFactory = $resultForwardFactory;
-        parent::__construct($context);
-    }
-
-    /**
      * Save product action
      *
      * @return \Magento\Backend\Model\View\Result\Redirect
@@ -33,17 +16,17 @@ class Save extends \EWD\Stock\Controller\Adminhtml\Warehouse
     public function execute()
     {
         $redirectBack = $this->getRequest()->getParam('back', false);
-        $warehouseId = $this->getRequest()->getParam('id');
-        $resultRedirect = $this->resultRedirectFactory->create();
-
+        $warehouseId = $this->getRequest()->getParam('warehouse_id');
         $data = $this->getRequest()->getPostValue();
         
         if ($data) {
             try {
                 $warehouse =  $this->_objectManager->create('EWD\Stock\Model\Warehouse');
+                $data['update_time'] = $data['creation_time'] = date('Y-m-d H:i:s');
                 
                 if ($warehouseId) {
                     $warehouse->load($warehouseId);
+                    unset($data['creation_time']);
                 }
                 
                 $warehouse->setData($data)->save();
@@ -60,22 +43,19 @@ class Save extends \EWD\Stock\Controller\Adminhtml\Warehouse
                 $redirectBack = $warehouseId ? true : 'new';
             }
         } else {
-            $resultRedirect->setPath('*/*/');
             $this->messageManager->addError('No data to save');
-            return $resultRedirect;
+            return $this->_redirect('ewdstock/*/index');
         }
 
         if ($redirectBack === 'new') {
-            $resultRedirect->setPath('*/*/new');
+            return $this->_redirect('ewd_stock/*/edit');
         } elseif ($redirectBack) {
-            $resultRedirect->setPath(
-                '*/*/edit',
-                ['id' => $warehouseId, '_current' => true]
-            );
-        } else {
-            $resultRedirect->setPath('*/*/');
-        }
+            return $this->_redirect('ewdstock/*/edit', [
+                'warehouse_id' => $warehouseId,
+                'active_tab' => $this->getRequest()->getParam('active_tab')
+            ]);
+        } 
         
-        return $resultRedirect;
+        return $this->_redirect('ewdstock/*/index');
     }
 }

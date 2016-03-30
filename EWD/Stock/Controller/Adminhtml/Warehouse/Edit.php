@@ -1,6 +1,9 @@
 <?php
 namespace EWD\Stock\Controller\Adminhtml\Warehouse;
 
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Registry;
+
 /**
  * Warehouse edit action
  *
@@ -9,99 +12,80 @@ namespace EWD\Stock\Controller\Adminhtml\Warehouse;
 class Edit extends \EWD\Stock\Controller\Adminhtml\Warehouse
 {
     /**
-     * Core registry
-     *
-     * @var \Magento\Framework\Registry
-     */
-    protected $_coreRegistry = null;
-
-    /**
-     * @var \Magento\Framework\View\Result\PageFactory
-     */
-    protected $resultPageFactory;
-
-    /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Registry $coreRegistry
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     */
-    public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Registry $coreRegistry,
-        \Magento\Backend\Model\View\Result\PageFactory $resultPageFactory
-    ) {
-        $this->resultPageFactory = $resultPageFactory;
-        $this->_coreRegistry =$coreRegistry;
-        parent::__construct($context);
-    }
-
-    /**
      * {@inheritdoc}
      */
     protected function _isAllowed()
     {
         return $this->_authorization->isAllowed('EWD_Stock::warehouse_save');
     }
+    
+    /**
+     * Core registry
+     *
+     * @var Registry
+     */
+    protected $_coreRegistry = null;
 
+    /**
+     * Constructor
+     *
+     * @param Context $context
+     * @param Registry $coreRegistry
+     */
+    public function __construct(Context $context, Registry $coreRegistry)
+    {
+        parent::__construct($context);
+        $this->_coreRegistry = $coreRegistry;
+    }
+    
     /**
      * Init actions
      *
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return void
      */
     protected function _initAction()
     {
-        // load layout, set active menu and breadcrumbs
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->resultPageFactory->create();
-        $resultPage->setActiveMenu('EWD_Stock::warehouse')
-            ->addBreadcrumb(__('Stock'), __('Stock'))
-            ->addBreadcrumb(__('Manage Warehouse'), __('Manage Warehouse'));
-        return $resultPage;
+        $this->_view->loadLayout();
+        $this->_setActiveMenu('EWD_Stock::warehouse');
     }
 
     /**
      * Edit Warehouse
      *
-     * @return \Magento\Backend\Model\View\Result\Page|\Magento\Backend\Model\View\Result\Redirect
+     * @return void
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function execute()
     {
-        // 1. Get ID and create model
         $id = $this->getRequest()->getParam('warehouse_id');
         $model = $this->_objectManager->create('EWD\Stock\Model\Warehouse');
-
-        // 2. Initial checking
+        
         if ($id) {
             $model->load($id);
             if (!$model->getId()) {
                 $this->messageManager->addError(__('This warehouse no longer exists.'));
-                /** \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
-                $resultRedirect = $this->resultRedirectFactory->create();
-                return $resultRedirect->setPath('*/*/');
+                return $this->_forward('index');
             }
         }
-
-        // 3. Set entered data if was error when we do save
+        
         $data = $this->_objectManager->get('Magento\Backend\Model\Session')->getFormData(true);
         if (!empty($data)) {
             $model->setData($data);
         }
-
-        // 4. Register model to use later in blocks
+        
         $this->_coreRegistry->register('warehouse', $model);
-
-        // 5. Build edit form
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->_initAction();
-        $resultPage->addBreadcrumb(
+        
+        $this->_initAction();
+        
+        $this->_addBreadcrumb(
             $id ? __('Edit Warehouse') : __('New Warehouse'),
             $id ? __('Edit Warehouse') : __('New Warehouse')
         );
-        $resultPage->getConfig()->getTitle()->prepend(__('Warehouses'));
-        $resultPage->getConfig()->getTitle()
+        
+        $this->_view->getPage()->getConfig()->getTitle()->prepend(__('Warehouses'));
+        $this->_view->getPage()->getConfig()->getTitle()
             ->prepend($model->getId() ? $model->getTitle() : __('New Warehouse'));
         
-        return $resultPage;
+        $this->_view->renderLayout();
     }
 }
