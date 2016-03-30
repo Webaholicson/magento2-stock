@@ -5,11 +5,8 @@ use \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 /**
  * Warehouse collection
- * @SuppressWarnings(PHPMD.ExcessivePublicCount)
- * @SuppressWarnings(PHPMD.TooManyFields)
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
- * @SuppressWarnings(PHPMD.NumberOfChildren)
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @author Antonio Mendes <webahilicson@gmail.com>
+ * 
  */
 class Collection extends AbstractCollection
 {

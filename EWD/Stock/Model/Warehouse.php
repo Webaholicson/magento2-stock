@@ -5,7 +5,7 @@ use \Magento\Framework\Model\AbstractModel;
 
 class Warehouse extends AbstractModel
 {
-	/**
+    /**
      * Prefix of model events names
      *
      * @var string
