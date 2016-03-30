@@ -37,19 +37,31 @@ class InstallSchema implements InstallSchemaInterface
             ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
             'Warehouse ID'
         )->addColumn(
+            'is_active',
+            \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
+            null,
+            ['nullable' => false],
+            'Warehouse Status'
+        )->addColumn(
             'warehouse_code',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             null,
             ['nullable' => false],
-            'Warehuse Code'
+            'Warehouse Code'
         )->addColumn(
-            'warehouse_contant_name',
+            'warehouse_name',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            null,
+            ['nullable' => true],
+            'Warehouse Name'
+        )->addColumn(
+            'warehouse_contact_name',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             null,
             ['nullable' => true],
             'Contact Name'
         )->addColumn(
-            'warehouse_contant_email',
+            'warehouse_contact_email',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             null,
             ['nullable' => true],
