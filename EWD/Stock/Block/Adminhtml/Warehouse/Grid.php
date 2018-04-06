@@ -75,14 +75,14 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
             'index' => 'warehouse_contact_email',
         ]);
         
-        $this->addColumn('creation_time', [
+        $this->addColumn('created_date', [
             'header' => __('Created On'),
-            'index' => 'creation_time',
+            'index' => 'created_date',
         ]);
         
-        $this->addColumn('update_time', [
+        $this->addColumn('updated_date', [
             'header' => __('Updated On'),
-            'index' => 'update_time',
+            'index' => 'updated_date',
         ]);
         
         return parent::_prepareColumns();

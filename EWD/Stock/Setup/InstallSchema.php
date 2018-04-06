@@ -26,7 +26,7 @@ class InstallSchema implements InstallSchemaInterface
         $installer->startSetup();
 
         /**
-         * Create table 'wishlist'
+         * Create table 'ewd_warehouse'
          */
         $table = $installer->getConnection()->newTable(
             $installer->getTable('ewd_warehouse')
@@ -85,13 +85,13 @@ class InstallSchema implements InstallSchemaInterface
             ['nullable' => true],
             'Warehouse Longitude'
         )->addColumn(
-            'creation_time',
+            'created_date',
             \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
             null,
             [],
             'Created date'
         )->addColumn(
-            'update_time',
+            'updated_date',
             \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
             null,
             [],
@@ -110,7 +110,7 @@ class InstallSchema implements InstallSchemaInterface
         $installer->getConnection()->createTable($table);
 
         /**
-         * Create table 'wishlist_item'
+         * Create table 'ewd_warehouse_shelf'
          */
         $table = $installer->getConnection()->newTable(
             $installer->getTable('ewd_warehouse_shelf')
@@ -138,6 +138,18 @@ class InstallSchema implements InstallSchemaInterface
             '64k',
             [],
             'Short description of shelf'
+        )->addColumn(
+            'created_date',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
+            null,
+            [],
+            'Created date'
+        )->addColumn(
+            'updated_date',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
+            null,
+            [],
+            'Last updated date'
         )->addIndex(
             $installer->getIdxName('ewd_warehouse_shelf', 'warehouse_id'),
             'warehouse_id'
@@ -182,6 +194,18 @@ class InstallSchema implements InstallSchemaInterface
             255,
             ['nullable' => false],
             'Qty'
+        )->addColumn(
+            'created_date',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
+            null,
+            [],
+            'Created date'
+        )->addColumn(
+            'updated_date',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
+            null,
+            [],
+            'Last updated date'
         )->addForeignKey(
             $installer->getFkName('ewd_warehouse_shelf_item', 'warehouse_shelf_id', 'ewd_warehouse_shelf', 'warehouse_shelf_id'),
             'warehouse_shelf_id',

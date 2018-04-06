@@ -11,9 +11,14 @@
         <referenceContainer name="left">
             <block class="EWD\Stock\Block\Adminhtml\Warehouse\Edit\Tabs" name="ewdstock_warehouse_edit_tabs">
                 <block class="EWD\Stock\Block\Adminhtml\Warehouse\Edit\Tab\Main" name="ewdstock_warehouse_edit_tab_main" />
+                <block class="EWD\Stock\Block\Adminhtml\Warehouse\Edit\Tab\Products" name="ewdstock_warehouse_edit_tab_products" />
                 <action method="addTab">
                     <argument name="name" xsi:type="string">main_section</argument>
                     <argument name="block" xsi:type="string">ewdstock_warehouse_edit_tab_main</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">products_section</argument>
+                    <argument name="block" xsi:type="string">ewdstock_warehouse_edit_tab_products</argument>
                 </action>
             </block>
         </referenceContainer>

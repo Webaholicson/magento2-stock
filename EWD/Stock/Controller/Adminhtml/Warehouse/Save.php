@@ -22,11 +22,11 @@ class Save extends \EWD\Stock\Controller\Adminhtml\Warehouse
         if ($data) {
             try {
                 $warehouse =  $this->_objectManager->create('EWD\Stock\Model\Warehouse');
-                $data['update_time'] = $data['creation_time'] = date('Y-m-d H:i:s');
+                $data['updated_date'] = $data['created_date'] = date('Y-m-d H:i:s');
                 
                 if ($warehouseId) {
                     $warehouse->load($warehouseId);
-                    unset($data['creation_time']);
+                    unset($data['created_date']);
                 }
                 
                 $warehouse->setData($data)->save();

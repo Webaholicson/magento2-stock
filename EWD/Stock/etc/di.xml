@@ -8,4 +8,8 @@
             <argument name="eventManager" xsi:type="object">Magento\Framework\Event\Manager</argument>
         </arguments>
     </type>
+    
+    <type name="Magento\Catalog\Block\Adminhtml\Product\Edit\Tabs">
+        <plugin sortOrder="10" name="warehouseShelfTab" type="EWD\Stock\Plugin\Catalog\Block\Adminhtml\Product\Edit\Tabs\Shelf" />
+    </type>
 </config>

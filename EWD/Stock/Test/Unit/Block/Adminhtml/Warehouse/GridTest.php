@@ -9,7 +9,7 @@ use \Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
  *  @author Antonio Mendes <webaholicson@gmail.com>
  * 
  */
-class GridTest extends \PHPUnit_Framework_TestCase
+class GridTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var EWD\Stock\Block\Adminhtml\Warehouse\Grid
@@ -173,8 +173,8 @@ class GridTest extends \PHPUnit_Framework_TestCase
                 array('warehouse_code',['header'=>__('Code'),'index'=>'warehouse_code']),
                 array('warehouse_contact_name',['header'=>__('Contact Name'),'index'=>'warehouse_contact_name']),
                 array('warehouse_contact_email',['header'=>__('Contact Email'),'index'=>'warehouse_contact_email']),
-                array('creation_time', ['header'=>__('Created On'),'index'=>'creation_time']),
-                array('update_time', ['header'=>__('Updated On'),'index'=>'update_time'])
+                array('created_date', ['header'=>__('Created On'),'index'=>'created_date']),
+                array('updated_date', ['header'=>__('Updated On'),'index'=>'updated_date'])
             )->willReturnSelf();
         
         $this->_mock->expects($this->once())

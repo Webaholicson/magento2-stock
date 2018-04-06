@@ -9,7 +9,7 @@ use \Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
  *  @author Antonio Mendes <webaholicson@gmail.com>
  * 
  */
-class WarehouseTest extends \PHPUnit_Framework_TestCase
+class WarehouseTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var EWD\Stock\Block\Adminhtml\Warehouse

@@ -7,7 +7,7 @@ use \Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
  *  Test the Warehouse edit container
  *  @author Antonio Mendes <webaholicson@gmail.com>
  */
-class EditTest extends \PHPUnit_Framework_TestCase
+class EditTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \Magento\Framework\TestFramework\Unit\Helper\ObjectManager

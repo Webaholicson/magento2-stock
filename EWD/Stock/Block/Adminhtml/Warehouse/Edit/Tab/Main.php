@@ -5,7 +5,7 @@ use \Magento\Backend\Block\Widget\Form\Generic;
 use \Magento\Backend\Block\Widget\Tab\TabInterface;
 
 /**
- * Cms page edit form main tab
+ * Basic warehouse info form main tab
  * 
  * @author     Antonio Mendes <webaholicson@gmail.com>
  */
