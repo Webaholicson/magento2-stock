@@ -1,14 +1,10 @@
 <?php
-/**
- * Copyright © 2015 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
-
 namespace EWD\Stock\Setup;
 
 use \Magento\Framework\Setup\InstallSchemaInterface;
 use \Magento\Framework\Setup\ModuleContextInterface;
 use \Magento\Framework\Setup\SchemaSetupInterface;
+use \Magento\Framework\DB\Adapter\AdapterInterface;
 
 /**
  * @codeCoverageIgnore
@@ -19,22 +15,43 @@ class InstallSchema implements InstallSchemaInterface
      * {@inheritdoc}
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
-    {
+    public function install(
+        SchemaSetupInterface $setup, 
+        ModuleContextInterface $context
+    ) {
         $installer = $setup;
 
         $installer->startSetup();
+        
+        $this->createWarehouseTable($installer);
+        $this->createWarehouseStoreTable($installer);
+        $this->createWarehouseShelfTable($installer);
+        $this->createWarehouseShelfItemTable($installer);
 
-        /**
-         * Create table 'ewd_warehouse'
-         */
+        $installer->endSetup();
+    }
+    
+    /**
+     * Create table 'ewd_warehouse'
+     *
+     * @param \Magento\Framework\Setup\SchemaSetupInterface $installer
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     */
+    private function createWarehouseTable(SchemaSetupInterface $installer)
+    {
         $table = $installer->getConnection()->newTable(
             $installer->getTable('ewd_warehouse')
         )->addColumn(
             'warehouse_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
-            ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+            [
+                'identity' => true, 
+                'unsigned' => true, 
+                'nullable' => false, 
+                'primary' => true
+            ],
             'Warehouse ID'
         )->addColumn(
             'is_active',
@@ -100,25 +117,99 @@ class InstallSchema implements InstallSchemaInterface
             $installer->getIdxName(
                 'warehouse_code',
                 'warehouse_code',
-                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
+                AdapterInterface::INDEX_TYPE_UNIQUE
             ),
             'warehouse_id',
-            ['type' => \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE]
+            ['type' => AdapterInterface::INDEX_TYPE_UNIQUE]
         )->setComment(
             'Warehouse main Table'
         );
-        $installer->getConnection()->createTable($table);
 
-        /**
-         * Create table 'ewd_warehouse_shelf'
-         */
+        $installer->getConnection()->createTable($table);
+    }
+    
+    /**
+     * Create table 'ewd_warehouse_store'
+     *
+     * @param \Magento\Framework\Setup\SchemaSetupInterface $installer
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     */
+    private function createWarehouseStoreTable(SchemaSetupInterface $installer)
+    {
+        $table = $installer->getConnection()->newTable(
+            $installer->getTable('ewd_warehouse_store')
+        )->addColumn(
+            'id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+            null,
+            [
+                'identity' => true, 
+                'unsigned' => true, 
+                'nullable' => false, 
+                'primary' => true
+            ],
+            'Primary key'
+        )->addColumn(
+            'warehouse_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+            null,
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
+            'Warehouse ID'
+        )->addColumn(
+            'store_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+            null,
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
+            'Store ID'
+        )->addColumn(
+            'created_date',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
+            null,
+            [],
+            'Created date'
+        )->addColumn(
+            'updated_date',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
+            null,
+            [],
+            'Last updated date'
+        )->addIndex(
+            $installer->getIdxName(
+                'ewd_warehouse_shelf',
+                ['warehouse_id', 'store_id'],
+                AdapterInterface::INDEX_TYPE_UNIQUE
+            ),
+            ['warehouse_id', 'store_id'],
+            ['type' => AdapterInterface::INDEX_TYPE_UNIQUE]
+        )->setComment(
+            'Warehouse and store pivot Table'
+        );
+
+        $installer->getConnection()->createTable($table);
+    }
+    
+    /**
+     * Create table 'ewd_warehouse_shelf'
+     *
+     * @param \Magento\Framework\Setup\SchemaSetupInterface $installer
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     */
+    private function createWarehouseShelfTable(SchemaSetupInterface $installer)
+    {
         $table = $installer->getConnection()->newTable(
             $installer->getTable('ewd_warehouse_shelf')
         )->addColumn(
             'warehouse_shelf_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
-            ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+            [
+                'identity' => true,
+                'unsigned' => true,
+                'nullable' => false,
+                'primary' => true
+            ],
             'Warehouse shelf ID'
         )->addColumn(
             'warehouse_id',
@@ -154,7 +245,12 @@ class InstallSchema implements InstallSchemaInterface
             $installer->getIdxName('ewd_warehouse_shelf', 'warehouse_id'),
             'warehouse_id'
         )->addForeignKey(
-            $installer->getFkName('ewd_warehouse_shelf', 'warehouse_id', 'ewd_warehouse', 'warehouse_id'),
+            $installer->getFkName(
+                'ewd_warehouse_shelf', 
+                'warehouse_id', 
+                'ewd_warehouse', 
+                'warehouse_id'
+            ),
             'warehouse_id',
             $installer->getTable('ewd_warehouse'),
             'warehouse_id',
@@ -163,18 +259,31 @@ class InstallSchema implements InstallSchemaInterface
         )->setComment(
             'Warehouse shelf'
         );
+        
         $installer->getConnection()->createTable($table);
-
-        /**
-         * Create table 'warehouse_shelf_item'
-         */
+    }
+    
+    /**
+     * Create table 'warehouse_shelf_item'
+     *
+     * @param \Magento\Framework\Setup\SchemaSetupInterface $installer
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     */
+    private function createWarehouseShelfItemTable(SchemaSetupInterface $installer)
+    {
         $table = $installer->getConnection()->newTable(
             $installer->getTable('ewd_warehouse_shelf_item')
         )->addColumn(
             'item_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
-            ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+            [
+                'identity' => true,
+                'unsigned' => true,
+                'nullable' => false,
+                'primary' => true
+            ],
             'Item Id'
         )->addColumn(
             'warehouse_shelf_id',
@@ -189,11 +298,17 @@ class InstallSchema implements InstallSchemaInterface
             ['unsigned' => true, 'nullable' => false],
             'Product Id'
         )->addColumn(
-            'Qty',
+            'qty',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             255,
             ['nullable' => false],
             'Qty'
+        )->addColumn(
+            'backorders',
+            \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+            null,
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
+            'Backorders'
         )->addColumn(
             'created_date',
             \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
@@ -207,7 +322,12 @@ class InstallSchema implements InstallSchemaInterface
             [],
             'Last updated date'
         )->addForeignKey(
-            $installer->getFkName('ewd_warehouse_shelf_item', 'warehouse_shelf_id', 'ewd_warehouse_shelf', 'warehouse_shelf_id'),
+            $installer->getFkName(
+                'ewd_warehouse_shelf_item',
+                'warehouse_shelf_id',
+                'ewd_warehouse_shelf',
+                'warehouse_shelf_id'
+            ),
             'warehouse_shelf_id',
             $installer->getTable('ewd_warehouse_shelf'),
             'warehouse_shelf_id',
@@ -216,8 +336,7 @@ class InstallSchema implements InstallSchemaInterface
         )->setComment(
             'Warehuse Shelf Item Table'
         );
+        
         $installer->getConnection()->createTable($table);
-
-        $installer->endSetup();
     }
 }

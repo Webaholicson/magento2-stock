@@ -16,10 +16,31 @@ class Products extends Grid implements TabInterface
      */
     protected function _prepareCollection()
     {
-        parent::_prepareCollection();
+        $collection = parent::_prepareCollection();
+        
+        $collection->join(
+            ['shelfItem' => 'ewd_warehouse_shelf_item']
+            "shelfItem.prouct_id = main.id",
+            ''
+        )->join(
+            ['shelf' => 'ewd_warehouse_shelf']
+            "shelf.id = shelfItem.warehouse_shelf_id",
+            'shelf.name'
+        );
+
+        $collection->addFieldToFilter(
+            'shelf.warehouse_id',
+            $this->getWarehouseData()->getId()
+        );
+
         return $this;
     }
-    
+
+    private function getWarehouseId()
+    {
+        return $this->getWarehouseData()->getId();
+    }
+
     /**
      * @return $this
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
